@@ -23,7 +23,13 @@ ext {
 }
 
 dependencies {
+    // Eureka Server — service registry + dashboard
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+
+    // Actuator — health checks, metrics (for Docker healthcheck + monitoring)
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
