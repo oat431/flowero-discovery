@@ -1,0 +1,30 @@
+# ============================================================
+# Flowero Discover — Eureka Service Registry
+# ============================================================
+# Copy this into your platform docker-compose.yml
+#
+# Ports:
+#   8999 — REST API (internal, services register/discover here)
+#   3999 — Dashboard (Nginx proxies discovery.panomete.com → :3999)
+# ============================================================
+
+services:
+  flowero-discover:
+    build:
+      context: ./flowerodiscovery
+      dockerfile: Dockerfile
+    container_name: flowero-discover
+    ports:
+      - "8999:8999"   # BE: REST API for service registration / discovery
+      - "3999:8999"    # FE: Dashboard (maps to same Eureka server for dual-port convention)
+    networks:
+      - panomete-net
+    environment:
+      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx192m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8999/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped

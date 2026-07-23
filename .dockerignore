@@ -1,0 +1,19 @@
+# Docker — ignore build artifacts and IDE files
+.gradle/
+build/
+.idea/
+*.iml
+out/
+bin/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docs (not needed in image)
+HELP.md
+
+# Gradle wrapper JAR is needed, but not the downloaded distributions
+gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.jar

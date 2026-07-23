@@ -1,3 +1,39 @@
 spring:
   application:
-    name: flowerodiscovery
+    name: flowero-discover
+
+server:
+  port: 8999
+
+eureka:
+  instance:
+    hostname: flowero-discover
+    prefer-ip-address: false
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    # Self-preservation: keep the registry intact during network hiccups
+    # Critical for homelab stability where services may have transient issues
+    enable-self-preservation: true
+    # Evict dead instances quickly — 5s timer, 90s lease expiration
+    eviction-interval-timer-in-ms: 5000
+    # Threshold below which self-preservation kicks in (85% = default)
+    renewal-percent-threshold: 0.85
+    # Wait before responding to allow new instances to propagate
+    wait-time-in-ms-when-sync-empty: 0
+
+# Actuator health endpoint for Docker healthchecks and monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO
