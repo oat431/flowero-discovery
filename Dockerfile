@@ -19,6 +19,9 @@ FROM eclipse-temurin:25-jre-noble
 
 WORKDIR /app
 
+# Install curl for Docker healthchecks
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 # Create non-root user
 RUN groupadd -r flowero && useradd -r -g flowero flowero
 
