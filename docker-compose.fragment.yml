@@ -15,12 +15,10 @@ services:
       dockerfile: Dockerfile
     container_name: flowero-discover
     ports:
-      - "8999:8999"   # BE: REST API for service registration / discovery
-      - "3999:8999"    # FE: Dashboard (maps to same Eureka server for dual-port convention)
+      - "127.0.0.1:8999:8999"   # BE: REST API for service registration / discovery
+      - "127.0.0.1:3999:8999"   # FE: Dashboard (Nginx proxies discovery.panomete.com → :3999)
     networks:
-      - panomete-net
-    environment:
-      - JAVA_TOOL_OPTIONS=-Xms128m -Xmx192m
+      - shared-network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8999/actuator/health"]
       interval: 30s
@@ -28,3 +26,8 @@ services:
       retries: 3
       start_period: 30s
     restart: unless-stopped
+
+networks:
+  shared-network:
+    external: true
+    name: db-network
