@@ -28,6 +28,7 @@ dependencies {
 
     // Actuator — health checks, metrics (for Docker healthcheck + monitoring)
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
